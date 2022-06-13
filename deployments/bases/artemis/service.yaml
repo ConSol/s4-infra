@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: artemis
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8161
+    - protocol: TCP
+      port: 61616
+    - protocol: TCP
+      port: 5672

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artemis
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          image: vromero/activemq-artemis:2.16.0-alpine@sha256:2621ab238411031e364cc219c621f20a6613efc3a91b43c85148e8872e6b3163
+          ports:
+            - containerPort: 8161
+            - containerPort: 61616
+            - containerPort: 5672
+          envFrom:
+            - secretRef:
+                name: artemis-credentials
+          volumeMounts:
+            - mountPath: /var/lib/artemis/etc-override/
+              name: broker-config-mount
+      volumes:
+        - name: broker-config-mount
+          configMap:
+            name: artemis-broker-config
