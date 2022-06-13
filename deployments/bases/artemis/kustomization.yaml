@@ -21,6 +21,9 @@ secretGenerator:
       - ARTEMIS_USERNAME=artemis
       - ARTEMIS_PASSWORD=password
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 commonLabels:
   app.kubernetes.io/name: artemis
   app.kubernetes.io/version: 2.16.0
