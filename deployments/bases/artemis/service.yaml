@@ -4,8 +4,7 @@ metadata:
   name: artemis
 spec:
   ports:
-    - name: http
-      protocol: TCP
+    - protocol: TCP
       port: 80
       targetPort: 8161
     - protocol: TCP
