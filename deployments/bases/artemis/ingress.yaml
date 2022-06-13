@@ -1,7 +1,7 @@
 piVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: artems
+  name: artemis
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
