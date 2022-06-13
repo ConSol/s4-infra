@@ -4,10 +4,10 @@ metadata:
   name: artemis
 spec:
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 8161
-    - protocol: TCP
-      port: 61616
-    - protocol: TCP
+    - name: amqp
+      protocol: TCP
       port: 5672
