@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artemis
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          image: postgres@sha256:5ea2da1f0275e38a6f39735b48a3688aae6ddfa2ad15971722d6fc0f2152918b
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-credentials
+          volumeMounts:
+            - mountPath: /var/lib/artemis/etc-override/
+              name: broker-config-mount
+      volumes:
+        - name: broker-config-mount
+          configMap:
+            name: artemis-broker-config

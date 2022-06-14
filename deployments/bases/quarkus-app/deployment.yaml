@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: QUARKUS_HTTP_PORT
+              value: '8080'
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

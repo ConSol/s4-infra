@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+
+configMapGenerator:
+  - name: postgres-setup-config
+    literals:
+      - POSTGRES_DB=postgres
+  - name: postgres-upload-configuration
+    literals:
+      - POSTGRES_HOST=postgres:5432
+      - POSTGRES_DATABASE=upload
+secretGenerator:
+  - name: postgres-setup-credentials
+    literals:
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=upload
+  - name: postgres-upload-credentials
+    literals:
+      - POSTGRES_USERNAME=upload
+      - POSTGRES_PASSWORD=upload
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonLabels:
+  app.kubernetes.io/name: postgres
+  app.kubernetes.io/version: 14.3
+  app.kubernetes.io/component: persistence
+  app.kubernetes.io/managed-by: ArgoCD
+  app.kubernetes.io/created-by: ArgoCD
