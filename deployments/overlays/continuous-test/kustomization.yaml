@@ -4,9 +4,11 @@ kind: Kustomization
 resources:
   - deployment.yaml
 
+namePrefix: continuous-test-
+
 commonLabels:
   app.kubernetes.io/name: continuous-test
   app.kubernetes.io/version: '1.0'
-  app.kubernetes.io/component: citrus
+  app.kubernetes.io/component: tests
   app.kubernetes.io/managed-by: ArgoCD
   app.kubernetes.io/created-by: ArgoCD
