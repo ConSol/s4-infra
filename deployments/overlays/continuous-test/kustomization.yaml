@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - deployment.yaml
 
+patchesStrategicMerge:
+  - generated-image-patch.yaml
+
 namePrefix: continuous-test-
 
 commonLabels:
