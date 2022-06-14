@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: main
-          image: foo/bar
+          image: public.ecr.aws/j6e0o7d4/s4/aggregator:a87a82b
