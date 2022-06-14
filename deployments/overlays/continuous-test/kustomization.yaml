@@ -4,6 +4,11 @@ kind: Kustomization
 resources:
   - deployment.yaml
 
+configMapGenerator:
+  - name: citrus-config
+    files:
+      - citrus-config.env
+
 patchesStrategicMerge:
   - generated-image-patch.yaml
 

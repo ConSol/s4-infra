@@ -10,9 +10,9 @@ spec:
         - name: main
           ports:
             - containerPort: 8080
-          env:
-            - name: SUT_URL
-              value: http://rest-api
+          envFrom:
+            - configMapRef:
+                name: citrus-config
           command:
             - "--engine"
             - "testng"
