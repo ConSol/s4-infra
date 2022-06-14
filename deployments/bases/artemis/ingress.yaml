@@ -7,7 +7,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: a80251b4396b9428d8898f2e34e92313-1929712141.eu-central-1.elb.amazonaws.com
+      http:
         paths:
           - path: /artemis(/|$)(.*)
             pathType: Prefix
