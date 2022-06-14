@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline-with-parameters
+spec:
+  params:
+    - name: code-repo-url
+      type: string
+    - name: infra-repo-url
+      type: string
+  workspaces:
+    - code
+    - infra
+  tasks:
+    - name: clone-code
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: https://github.com/ConSol/super-simple-storage-solution.git
+        - name: revision
+          value: main
+      workspaces:
+        - name: output
+          workspace: code
+    - name: clone-infra
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: https://github.com/ConSol/s4-infra.git
+        - name: revision
+          value: main
+      workspaces:
+        - name: output
+          workspace: infra
