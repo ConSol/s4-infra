@@ -13,4 +13,4 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: postgres-credentials
+                name: postgres-setup-credentials

@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline-with-parameters
+spec:
+  params:
+    - name: context
+      type: string
+      description: Path to context
+      default: /some/where/or/other
+    - name: flags
+      type: array
+      description: List of flags
+  tasks:
+    - name: build-skaffold-web
+      taskRef:
+        name: build-push
+      params:
+        - name: pathToDockerFile
+          value: Dockerfile
+        - name: pathToContext
+          value: "$(params.context)"
+        - name: flags
+          value: ["$(params.flags[*])"]
