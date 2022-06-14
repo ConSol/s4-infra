@@ -4,3 +4,4 @@ kind: Kustomization
 components:
   - catalog
   - triggerTemplates
+  - pipelines

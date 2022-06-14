@@ -21,7 +21,7 @@ spec:
       spec:
         serviceAccountName: tekton-triggers-sa
         pipelineRef:
-          name: getting-started-pipeline
+          name: java-build-push-commit
         resources:
           - name: source-repo
             resourceSpec:
@@ -31,9 +31,30 @@ spec:
                   value: $(tt.params.gitrevision)
                 - name: url
                   value: $(tt.params.gitrepositoryurl)
-          - name: event-to-sink
-            resourceSpec:
-              type: cloudEvent
-              params:
-                - name: targetURI
-                  value: http://event-display.getting-started.svc.cluster.local
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: s4-pipelinebinding
+  namespace: tekton-pipelines
+spec:
+  params:
+    - name: gitrevision
+      value: $(body.head_commit.id)
+    - name: namespace
+      value: tekton-pipelines
+    - name: gitrepositoryurl
+      value: "https://github.com/$(body.repository.full_name)"
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: s4-listener
+  namespace: tekton-pipelines
+spec:
+  serviceAccountName: tekton-triggers-sa
+  triggers:
+    - bindings:
+        - ref: s4-pipelinebinding
+      template:
+        ref: s4
