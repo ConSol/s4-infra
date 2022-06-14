@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      containers:
+        - name: main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TRACING_ENDPOINT
+              value: http://jaeger:14268/api/traces
