@@ -13,6 +13,9 @@ configMapGenerator:
     literals:
       - POSTGRES_HOST=postgres:5432
       - POSTGRES_DATABASE=upload
+  - name: postgres-init-script
+    files:
+      - create-multiple-postgresql-databases.sh
 secretGenerator:
   - name: postgres-setup-credentials
     literals:
