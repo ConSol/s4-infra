@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SUT_URL
+              value: http://rest-api

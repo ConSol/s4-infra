@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: continuous-test
+  app.kubernetes.io/version: '1.0'
+  app.kubernetes.io/component: citrus
+  app.kubernetes.io/managed-by: ArgoCD
+  app.kubernetes.io/created-by: ArgoCD
