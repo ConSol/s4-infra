@@ -22,11 +22,11 @@ spec:
                   key: POSTGRES_DATABASE
             - name: DB_USERNAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: postgres-upload-credentials
                   key: POSTGRES_USERNAME
             - name: DB_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: postgres-upload-configuration
+                secretKeyRef:
+                  name: postgres-upload-credentials
                   key: POSTGRES_PASSWORD
