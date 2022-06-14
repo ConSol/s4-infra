@@ -7,8 +7,6 @@ spec:
     spec:
       containers:
         - name: main
-          ports:
-            - containerPort: 8080
           env:
             - name: GELF_HOST
               value: logstash
