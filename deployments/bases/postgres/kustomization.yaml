@@ -29,7 +29,7 @@ generatorOptions:
 
 commonLabels:
   app.kubernetes.io/name: postgres
-  app.kubernetes.io/version: 14.3
+  app.kubernetes.io/version: '14.3'
   app.kubernetes.io/component: persistence
   app.kubernetes.io/managed-by: ArgoCD
   app.kubernetes.io/created-by: ArgoCD
