@@ -6,6 +6,5 @@ resources:
   - service.yaml
 
 commonLabels:
-  app.kubernetes.io/component: app
   app.kubernetes.io/managed-by: ArgoCD
   app.kubernetes.io/created-by: ArgoCD
