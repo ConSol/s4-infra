@@ -22,11 +22,11 @@ spec:
                   key: ARTEMIS_PORT
             - name: AMQP_USERNAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: artemis-credentials
                   key: ARTEMIS_USERNAME
             - name: AMQP_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: artemis-credentials
                   key: ARTEMIS_PASSWORD
