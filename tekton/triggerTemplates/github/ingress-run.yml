@@ -1,0 +1,18 @@
+
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: create-ingress-run
+  namespace: getting-started
+spec:
+  taskRef:
+    name: create-ingress
+  params:
+    - name: ExternalDomain
+      value: https://aecc33e397e304b71859720e292617da-198e65507b6213f4.elb.eu-central-1.amazonaws.com
+    - name: Service
+      value: getting-started
+    - name: ServicePort
+      value: "8080"
+  timeout: 1000s
+  serviceAccountName: tekton-triggers-tekton-triggers-webhook
