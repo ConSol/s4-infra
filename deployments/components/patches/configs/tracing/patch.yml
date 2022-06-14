@@ -9,4 +9,4 @@ spec:
         - name: main
           env:
             - name: TRACING_ENDPOINT
-              value: http://jaeger:14268/api/traces
+              value: http://instana-agent:42699/com.instana.plugin.jaeger.trace
