@@ -19,7 +19,7 @@ spec:
         generateName: github-
         namespace: $(tt.params.namespace)
       spec:
-        serviceAccountName: tekton-triggers-example-sa
+        serviceAccountName: tekton-triggers-sa
         pipelineRef:
           name: getting-started-pipeline
         resources:
@@ -31,12 +31,6 @@ spec:
                   value: $(tt.params.gitrevision)
                 - name: url
                   value: $(tt.params.gitrepositoryurl)
-          - name: image-source
-            resourceSpec:
-              type: image
-              params:
-                - name: url
-                  value: DOCKERREPO-REPLACEME # docker-repo-location.com/repo:getting-started
           - name: event-to-sink
             resourceSpec:
               type: cloudEvent
