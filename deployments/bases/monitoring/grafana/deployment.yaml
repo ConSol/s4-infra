@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          image: grafana/grafana@sha256:4efae4ef2855ec221836f65061be390fd9267ca63945b68a4e136ddcd430f005
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              value: grafana
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: grafana
+          volumeMounts:
+            - mountPath: /etc/dashboards/application
+              name: application-dashboards
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-dashboards
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: grafana-datasources
+      volumes:
+        - name: application-dashboards
+          configMap:
+            name: application-dashboards
+        - name: grafana-dashboards
+          configMap:
+            name: grafana-dashboards
+        - name: grafana-datasources
+          configMap:
+            name: grafana-datasources
+
