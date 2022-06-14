@@ -6,8 +6,11 @@ resources:
 
 configMapGenerator:
   - name: citrus-config
-    files:
+    envs:
       - citrus-config.env
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 patchesStrategicMerge:
   - generated-image-patch.yaml
