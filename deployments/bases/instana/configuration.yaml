@@ -44,4 +44,6 @@ com.instana.plugin.prometheus:
 com.instana.plugin.postgresql:
   user: 'postgres'
   password: 'postgres'
-  database: upload
+  database: ''
+com.instana.plugin.javatrace:
+  trace-jvms-with-problematic-agents: true
