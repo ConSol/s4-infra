@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: main
-          image: public.ecr.aws/j6e0o7d4/s4/continuous-test:1498df7
+          image: public.ecr.aws/j6e0o7d4/s4/continuous-test:6a3afd6
