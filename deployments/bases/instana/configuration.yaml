@@ -33,6 +33,7 @@
 com.instana.plugin.activemqartemis:
   - 'upload-ready-for-processing::aggregator'
   - 'aggregator'
+  - 'upload-ready-for-processing'
 com.instana.plugin.prometheus:
   # Global (all) endpoints username/password configuration (optional)
   username: ''
