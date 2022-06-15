@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: main
+        - name: artemis
           image: vromero/activemq-artemis:2.16.0-alpine@sha256:2621ab238411031e364cc219c621f20a6613efc3a91b43c85148e8872e6b3163
           ports:
             - containerPort: 8161

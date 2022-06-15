@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: main
+        - name: jaeger
           image: jaegertracing/all-in-one@sha256:f111f6ced1d3cc38eb102e278a87470644dba005c838f34ae92e375ab4bc21a4
           ports:
             - containerPort: 16686

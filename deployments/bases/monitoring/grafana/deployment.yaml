@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: main
+        - name: grafana
           image: grafana/grafana@sha256:4efae4ef2855ec221836f65061be390fd9267ca63945b68a4e136ddcd430f005
           ports:
             - containerPort: 3000

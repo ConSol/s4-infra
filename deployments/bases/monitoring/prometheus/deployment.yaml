@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: main
+        - name: prometheus
           image: prom/prometheus@sha256:c833de2399020386dc1e886363467f60b7f8e404aef5eaa7a757d6968cf5147b
           volumeMounts:
             - mountPath: /etc/prometheus

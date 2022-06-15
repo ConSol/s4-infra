@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: main
+        - name: postgres
           image: postgres@sha256:5ea2da1f0275e38a6f39735b48a3688aae6ddfa2ad15971722d6fc0f2152918b
           ports:
             - containerPort: 5432
