@@ -11,6 +11,7 @@ configMapGenerator:
     files:
       - configuration.yaml
   - name: instana-tracing-config
+    namespace: s4
     literals:
       - TRACING_ENABLED=true
       - TRACING_ENDPOINT=http://instana-agent.instana-agent.svc:42699/com.instana.plugin.jaeger.trace
