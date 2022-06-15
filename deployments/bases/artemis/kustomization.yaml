@@ -18,7 +18,7 @@ secretGenerator:
   - name: artemis-credentials
     literals:
       - ARTEMIS_USERNAME=artemis
-      - ARTEMIS_PASSWORD=password
+      - ARTEMIS_PASSWORD=artemis
 
 generatorOptions:
   disableNameSuffixHash: true
