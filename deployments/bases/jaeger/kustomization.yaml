@@ -5,6 +5,15 @@ resources:
   - deployment.yaml
   - service.yaml
 
+configMapGenerator:
+  - name: tracing-config
+    literals:
+      - TRACING_ENABLED=true
+      - TRACING_ENDPOINT=http://jaeger:14268/api/traces
+
+generatorOptions:
+  disableNameSuffixHash: true
+
 commonLabels:
   app.kubernetes.io/name: jaeger
   app.kubernetes.io/version: '1.35.1'

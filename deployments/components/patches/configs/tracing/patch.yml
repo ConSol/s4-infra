@@ -7,6 +7,6 @@ spec:
     spec:
       containers:
         - name: main
-          env:
-            - name: TRACING_ENDPOINT
-              value: http://instana-agent:42699/com.instana.plugin.jaeger.trace
+          envFrom:
+            - configMapRef:
+                name: tracing-config
