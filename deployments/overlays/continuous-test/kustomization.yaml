@@ -15,7 +15,15 @@ generatorOptions:
 patchesStrategicMerge:
   - generated-image-patch.yaml
 
-namePrefix: continuous-test-app
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: app
+    path: patch-container-name.yaml
+
+namePrefix: continuous-test-
 
 commonLabels:
   app.kubernetes.io/name: continuous-test-app
