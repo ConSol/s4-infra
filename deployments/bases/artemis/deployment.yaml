@@ -8,7 +8,8 @@ spec:
     spec:
       containers:
         - name: artemis
-          image: vromero/activemq-artemis:2.16.0-alpine@sha256:2621ab238411031e364cc219c621f20a6613efc3a91b43c85148e8872e6b3163
+          # 2.6.3
+          image: vromero/activemq-artemis@sha256:efd0c7ed7b43582b51c77d20fa94a3fef2e79ca444f6b2dfce7c32df31d32c37
           ports:
             - containerPort: 8161
             - containerPort: 61616
