@@ -6,9 +6,14 @@ resources:
   - service.yaml
 
 configMapGenerator:
-  - name: logstash-config
+  - name: logstash-gelf-config
     files:
       - gelf.conf
+  - name: gelf-config
+    literals:
+      - GELF_ENABLED=true
+      - GELF_HOST=logstash
+      - GELF_PORT=12201
 
 generatorOptions:
   disableNameSuffixHash: true

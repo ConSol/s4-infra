@@ -7,8 +7,6 @@ spec:
     spec:
       containers:
         - name: main
-          env:
-            - name: GELF_HOST
-              value: logstash
-            - name: GELF_PORT
-              value: '12201'
+          envFrom:
+            - configMapRef:
+                name: gelf-config
