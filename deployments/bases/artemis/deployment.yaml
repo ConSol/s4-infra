@@ -13,6 +13,13 @@ spec:
             - containerPort: 8161
             - containerPort: 61616
             - containerPort: 5672
+          env:
+            - name: ENABLE_JMX
+              value: 'true'
+            - name: JMX_RMI_PORT
+              value: '1198'
+            - name: JMX_PORT
+              value: '1199'
           envFrom:
             - secretRef:
                 name: artemis-credentials

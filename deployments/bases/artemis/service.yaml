@@ -11,3 +11,8 @@ spec:
     - name: amqp
       protocol: TCP
       port: 5672
+    - name: jxm_rmi
+      port: 1198
+    - name: jmx
+      protocol: TCP
+      port: 1199
