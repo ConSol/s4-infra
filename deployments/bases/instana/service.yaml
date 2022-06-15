@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: instana-agent
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 42699
+  selector:
+    app.kubernetes.io/name: instana-agent
