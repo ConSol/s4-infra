@@ -15,8 +15,10 @@ generatorOptions:
 patchesStrategicMerge:
   - generated-image-patch.yaml
 
+namePrefix: continuous-test-app
+
 commonLabels:
-  app.kubernetes.io/name: continuous-test
+  app.kubernetes.io/name: continuous-test-app
   app.kubernetes.io/version: '1.0'
   app.kubernetes.io/component: tests
   app.kubernetes.io/managed-by: ArgoCD
