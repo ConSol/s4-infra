@@ -456,12 +456,12 @@
           {
             "selected": false,
             "text": "rest-api",
-            "value": "rest-api"
+            "value": "rest-api-app"
           },
           {
             "selected": true,
             "text": "aggregator",
-            "value": "aggregator"
+            "value": "aggregator-app"
           }
         ],
         "query": "rest-api, aggregator",
