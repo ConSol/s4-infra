@@ -9,6 +9,9 @@ spec:
       containers:
         - name: postgres
           image: postgres@sha256:5ea2da1f0275e38a6f39735b48a3688aae6ddfa2ad15971722d6fc0f2152918b
+          args:
+            - -c
+            - config_file=/usr/share/postgresql/postgresql.conf
           ports:
             - containerPort: 5432
           envFrom:
@@ -17,7 +20,16 @@ spec:
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d
               name: postgres-init-script
+            - mountPath: /usr/share/postgresql/postgresql.conf
+              name: postgresql-conf
+              subPath: postgresql.conf
       volumes:
         - name: postgres-init-script
           configMap:
             name: postgres-init-script
+        - name: postgresql-conf
+          configMap:
+            name: postgresql-conf
+            items:
+              - key: postgresql.conf
+                path: postgresql.conf

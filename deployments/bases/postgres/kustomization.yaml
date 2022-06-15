@@ -9,6 +9,9 @@ configMapGenerator:
   - name: postgres-setup-config
     literals:
       - POSTGRES_DB=postgres
+  - name: postgresql-conf
+    files:
+      - postgresql.conf
   - name: postgres-upload-configuration
     literals:
       - POSTGRES_HOST=postgres:5432
