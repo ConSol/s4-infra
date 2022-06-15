@@ -24,7 +24,7 @@ patchesJson6902:
 namePrefix: aggregator-
 
 commonLabels:
-  app.kubernetes.io/name: aggregator
+  app.kubernetes.io/name: aggregator-app
   app.kubernetes.io/version: '1.0'
   app.kubernetes.io/component: s4
   app.kubernetes.io/managed-by: ArgoCD
