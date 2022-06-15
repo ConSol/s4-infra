@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+  - name: instana-agent
+    literals:
+      - cluster_name=s4
+    files:
+      - configuration.yaml
+  - name: instana-tracing-config
+    literals:
+      - TRACING_ENABLED=true
+      - TRACING_ENDPOINT=http://instana-agent.instana-agent.svc:42699/com.instana.plugin.jaeger.trace
+
+generatorOptions:
+  disableNameSuffixHash: true
