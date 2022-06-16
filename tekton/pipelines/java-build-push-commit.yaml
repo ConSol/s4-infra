@@ -72,10 +72,6 @@ spec:
           value: './dockerfiles/Dockerfile.quarkus-ubi'
         - name: CONTEXT
           value: './services/aggregator'
-        - name: AWS_SDK_LOAD_CONFIG
-          value: true
-        - name: AWS_EC2_METADATA_DISABLED
-          value: false
       workspaces:
         - name: source
           workspace: code
