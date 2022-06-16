@@ -16,6 +16,7 @@ spec:
     - name: code
     - name: infra
     - name: maven-settings
+    - name: git-credentials
   tasks:
     - name: clone-code
       taskRef:
@@ -52,9 +53,111 @@ spec:
           value:
             - clean
             - install
+            - -Dmaven.repo.local=$(workspaces.maven-settings.path)
+            - -DskipTests
       workspaces:
         - name: source
           workspace: code
         - name: maven-settings
           workspace: maven-settings
-
+    - name: build-and-push-aggregator-image
+      taskRef:
+        name: kaniko
+      runAfter:
+        - build
+      params:
+        - name: IMAGE
+          value: '935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/aggregator:$(tasks.clone-code.results.commit-short)'
+        - name: DOCKERFILE
+          value: './dockerfiles/Dockerfile.quarkus-ubi'
+        - name: CONTEXT
+          value: './services/aggregator'
+        - name: AWS_SDK_LOAD_CONFIG
+          value: true
+        - name: AWS_EC2_METADATA_DISABLED
+          value: false
+      workspaces:
+        - name: source
+          workspace: code
+    - name: build-and-push-continuous-test-image
+      taskRef:
+        name: kaniko
+      runAfter:
+        - build
+      params:
+        - name: IMAGE
+          value: '935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/continuous-test:$(tasks.clone-code.results.commit-short)'
+        - name: DOCKERFILE
+          value: './dockerfiles/Dockerfile.ubi'
+        - name: CONTEXT
+          value: './citrus-tests/continuous'
+        - name: AWS_SDK_LOAD_CONFIG
+          value: true
+        - name: AWS_EC2_METADATA_DISABLED
+          value: false
+      workspaces:
+        - name: source
+          workspace: code
+    - name: build-and-push-rest-api-image
+      taskRef:
+        name: kaniko
+      runAfter:
+        - build
+      params:
+        - name: IMAGE
+          value: '935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/rest-api:$(tasks.clone-code.results.commit-short)'
+        - name: DOCKERFILE
+          value: './dockerfiles/Dockerfile.quarkus-ubi'
+        - name: CONTEXT
+          value: './services/rest-api'
+        - name: AWS_SDK_LOAD_CONFIG
+          value: true
+        - name: AWS_EC2_METADATA_DISABLED
+          value: false
+      workspaces:
+        - name: source
+          workspace: code
+    - name: patch-deployment-images
+      taskRef:
+        name: bash
+      runAfter:
+        - build-and-push-aggregator-image
+        - build-and-push-rest-api-image
+        - build-and-push-continuous-test-image
+      params:
+        - name: command
+          value: |
+            commit_short=$(tasks.clone-code.results.commit-short);
+            sed -i "s@\(image:\s\+\)[a-zA-Z0-9_/.:-]*@\1935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/aggregator:${commit_short}@g" \
+              deployments/overlays/aggregator/generated-image-patch.yaml;
+            sed -i "s@\(image:\s\+\)[a-zA-Z0-9_/.:-]*@\1935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/continuous-test:${commit_short}@g" \
+              deployments/overlays/continuous-test/generated-image-patch.yaml;
+            sed -i "s@\(image:\s\+\)[a-zA-Z0-9_/.:-]*@\1935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/rest-api:${commit_short}@g" \
+              deployments/overlays/rest-api/generated-image-patch.yaml;
+      workspaces:
+        - name: source
+          workspace: infra
+    - name: commit-and-push-to-infra
+      taskRef:
+        name: git-cli
+      runAfter:
+        - patch-deployment-images
+      params:
+        - name: GIT_USER_NAME
+          value: tekton-pusher
+        - name: GIT_USER_EMAIL
+          value: tekton@pipe.line
+        - name: GIT_SCRIPT
+          value: |
+            git checkout main
+            git pull
+            git add deployments/overlays/aggregator/generated-image-patch.yaml
+            git add deployments/overlays/continuous-test/generated-image-patch.yaml
+            git add deployments/overlays/rest-api/generated-image-patch.yaml
+            git commit -m "commit $(tasks.clone-code.results.commit-short): updating images"
+            git push -u origin
+      workspaces:
+        - name: source
+          workspace: infra
+        - name: basic-auth
+          workspace: git-credentials

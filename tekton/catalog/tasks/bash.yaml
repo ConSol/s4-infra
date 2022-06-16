@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: bash
+  labels:
+    app.kubernetes.io/version: "0.5"
+  annotations:
+    tekton.dev/pipelines.minVersion: "0.21.0"
+    tekton.dev/categories: Bash
+    tekton.dev/tags: bash
+    tekton.dev/displayName: "bash"
+    tekton.dev/platforms: "linux/amd64"
+spec:
+  description: Runs a list of bash commands.
+  workspaces:
+    - name: source
+      optional: true
+      description: A workspace containing the sources to act on.
+  params:
+    - name: command
+      description: the command(s) to execute.
+      type: string
+    - name: bashImage
+      description: |
+        "the bash-image to use (default is bash:devel-alpine3.15, sha: 9e58b268581841e7d1656a5a74fdf78e3cbf1a021fad63affec78b7f200b7bbf)"
+      type: string
+      default: bash@sha256:9e58b268581841e7d1656a5a74fdf78e3cbf1a021fad63affec78b7f200b7bbf
+  steps:
+    - name: bash
+      image: "$(params.bashImage)"
+      script: |
+        if [ "$(workspaces.source.bound)" = "true" ]; then
+          cd $(workspaces.source.path)
+        fi
+        echo "executing command:"
+        echo "$(params.command)"
+        eval $(params.command)
