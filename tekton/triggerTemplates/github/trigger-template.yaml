@@ -1,8 +1,8 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: s4
-  namespace: tekton-pipelines
+  name: s4-triggertemplate
+  namespace: s4-pipelines
 spec:
   params:
     - name: gitrevision
@@ -23,7 +23,7 @@ spec:
         pipelineRef:
           name: java-build-push-commit
         resources:
-          - name: source-repo
+          - name: code-repo-
             resourceSpec:
               type: git
               params:
@@ -31,18 +31,26 @@ spec:
                   value: $(tt.params.gitrevision)
                 - name: url
                   value: $(tt.params.gitrepositoryurl)
+          - name: infra-repo
+            resourceSpec:
+              type: git
+              params:
+                - name: revision
+                  value: main
+                - name: url
+                  value: https://github.com/ConSol/s4-infra
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: s4-pipelinebinding
-  namespace: tekton-pipelines
+  namespace: s4-pipelines
 spec:
   params:
     - name: gitrevision
       value: $(body.head_commit.id)
     - name: namespace
-      value: tekton-pipelines
+      value: s4-pipelines
     - name: gitrepositoryurl
       value: "https://github.com/$(body.repository.full_name)"
 ---
@@ -50,11 +58,11 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
   name: s4-listener
-  namespace: tekton-pipelines
+  namespace: s4-pipelines
 spec:
   serviceAccountName: tekton-triggers-sa
   triggers:
     - bindings:
         - ref: s4-pipelinebinding
       template:
-        ref: s4
+        ref: s4-triggertemplate
