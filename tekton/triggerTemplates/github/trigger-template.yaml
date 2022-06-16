@@ -5,10 +5,10 @@ metadata:
   namespace: s4-pipelines
 spec:
   params:
-    - name: gitrevision
+    - name: git-repository-revision
       description: The git revision
       default: master
-    - name: gitrepositoryurl
+    - name: git-repository-url
       description: The git repository url
     - name: namespace
       description: The namespace to create the resources
@@ -17,28 +17,39 @@ spec:
       kind: PipelineRun
       metadata:
         generateName: github-
-        namespace: $(tt.params.namespace)
+        namespace: s4-pipelines
       spec:
         serviceAccountName: tekton-triggers-sa
         pipelineRef:
           name: java-build-push-commit
-        resources:
-          - name: code-repo-
-            resourceSpec:
-              type: git
-              params:
-                - name: revision
-                  value: $(tt.params.gitrevision)
-                - name: url
-                  value: $(tt.params.gitrepositoryurl)
-          - name: infra-repo
-            resourceSpec:
-              type: git
-              params:
-                - name: revision
-                  value: main
-                - name: url
-                  value: https://github.com/ConSol/s4-infra
+        params:
+          - name: code-repo-url
+            value: $(tt.params.git-repository-url)
+          - name: code-repo-revision
+            value: $(tt.params.git-repository-revision)
+          - name: infra-repo-url
+            value: 'https://github.com/ConSol/s4-infra'
+          - name: infra-repo-revision
+            value: main
+        workspaces:
+          - name: code
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 1Gi
+          - name: infra
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 1Gi
+          - name: maven-settings
+            emptyDir: {}
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
@@ -47,12 +58,10 @@ metadata:
   namespace: s4-pipelines
 spec:
   params:
-    - name: gitrevision
+    - name: git-repository-url
+      value: $(body.repository.url)
+    - name: git-repository-revision
       value: $(body.head_commit.id)
-    - name: namespace
-      value: s4-pipelines
-    - name: gitrepositoryurl
-      value: "https://github.com/$(body.repository.full_name)"
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener

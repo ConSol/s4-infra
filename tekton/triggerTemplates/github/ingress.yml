@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: el-s4
+  namespace: s4-pipelines
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /s4-pipelines
+            pathType: Prefix
+            backend:
+              service:
+                name: el-s4-listener
+                port:
+                  name: http-listener

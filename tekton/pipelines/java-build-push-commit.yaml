@@ -4,22 +4,27 @@ metadata:
   name: java-build-push-commit
 spec:
   params:
-    - name: code-repo
-      type: git
-    - name: infra-repo
-      type: git
+    - name: code-repo-url
+      type: string
+    - name: code-repo-revision
+      type: string
+    - name: infra-repo-url
+      type: string
+    - name: infra-repo-revision
+      type: string
   workspaces:
-    - code
-    - infra
+    - name: code
+    - name: infra
+    - name: maven-settings
   tasks:
     - name: clone-code
       taskRef:
         name: git-clone
       params:
         - name: url
-          value: ${params.code-repo.url}
+          value: $(params.code-repo-url)
         - name: revision
-          value: ${params.code-repo.revision}
+          value: $(params.code-repo-revision)
       workspaces:
         - name: output
           workspace: code
@@ -28,9 +33,28 @@ spec:
         name: git-clone
       params:
         - name: url
-          value: ${params.infra-repo.url}
+          value: $(params.infra-repo-url)
         - name: revision
-          value: ${params.infra-repo.revision}
+          value: $(params.infra-repo-revision)
       workspaces:
         - name: output
           workspace: infra
+    - name: build
+      taskRef:
+        name: maven
+      runAfter:
+        - clone-code
+      params:
+        - name: MAVEN_IMAGE
+          # 3-eclipse-temurin-17
+          value: maven@sha256:7e8eb04644e82fafbf46b10fed81e3c46b067ea7bd27af4260fae9b4e98256fd
+        - name: GOALS
+          value:
+            - clean
+            - install
+      workspaces:
+        - name: source
+          workspace: code
+        - name: maven-settings
+          workspace: maven-settings
+
