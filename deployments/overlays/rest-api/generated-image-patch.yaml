@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: main
-          image: public.ecr.aws/j6e0o7d4/s4/rest-api:ubi-529ae48
+          image: 935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/continuous-test:0558f02
