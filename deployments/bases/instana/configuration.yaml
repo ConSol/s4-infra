@@ -47,3 +47,4 @@ com.instana.plugin.postgresql:
   database: ''
 com.instana.plugin.opentelemetry:
   enabled: true
+log4j2.logger.instana.level: DEBUG
