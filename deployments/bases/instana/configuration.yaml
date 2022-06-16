@@ -45,6 +45,3 @@ com.instana.plugin.postgresql:
   user: 'postgres'
   password: 'postgres'
   database: ''
-com.instana.plugin.opentelemetry:
-  enabled: true
-log4j2.logger.instana.level: DEBUG
