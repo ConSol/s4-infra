@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - deployment.yaml
 
+components:
+  - ../../components/pod/health/citrus
+
 configMapGenerator:
   - name: citrus-config
     envs:

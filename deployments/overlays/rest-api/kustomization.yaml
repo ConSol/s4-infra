@@ -9,6 +9,7 @@ components:
   - ../../components/patches/configs/postgres
   - ../../components/patches/configs/instana-tracing
   - ../../components/patches/configs/logging
+  - ../../components/pod/health/quarkus
 
 patchesStrategicMerge:
   - generated-image-patch.yaml
