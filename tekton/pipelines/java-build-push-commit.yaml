@@ -15,7 +15,7 @@ spec:
   workspaces:
     - name: code
     - name: infra
-    - name: maven-settings
+    - name: maven-settings-and-cache
     - name: git-credentials
   tasks:
     - name: clone-code
@@ -53,13 +53,13 @@ spec:
           value:
             - clean
             - install
-            - -Dmaven.repo.local=$(workspaces.maven-settings.path)
+            - -Dmaven.repo.local=$(workspaces.maven-settings-and-cache.path)
             - -DskipTests
       workspaces:
         - name: source
           workspace: code
         - name: maven-settings
-          workspace: maven-settings
+          workspace: maven-settings-and-cache
     - name: build-and-push-aggregator-image
       taskRef:
         name: kaniko
