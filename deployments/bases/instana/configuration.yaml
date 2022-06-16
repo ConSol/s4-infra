@@ -45,5 +45,5 @@ com.instana.plugin.postgresql:
   user: 'postgres'
   password: 'postgres'
   database: ''
-com.instana.plugin.javatrace:
-  trace-jvms-with-problematic-agents: true
+com.instana.plugin.opentelemetry:
+  enabled: true
