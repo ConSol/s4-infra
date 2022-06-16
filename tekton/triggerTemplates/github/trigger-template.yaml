@@ -65,7 +65,7 @@ spec:
     - name: git-repository-url
       value: $(body.repository.html_url)
     - name: git-repository-revision
-      value: $(body.head_commit.id)
+      value: $(body.commit_id)
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
