@@ -20,6 +20,7 @@ spec:
   tasks:
     - name: clone-code
       taskRef:
+        kind: Task
         name: git-clone
       params:
         - name: url
@@ -31,6 +32,7 @@ spec:
           workspace: code
     - name: clone-infra
       taskRef:
+        kind: Task
         name: git-clone
       params:
         - name: url
@@ -42,6 +44,7 @@ spec:
           workspace: infra
     - name: build
       taskRef:
+        kind: Task
         name: maven
       runAfter:
         - clone-code
@@ -62,6 +65,7 @@ spec:
           workspace: maven-settings-and-cache
     - name: build-and-push-aggregator-image
       taskRef:
+        kind: Task
         name: kaniko
       runAfter:
         - build
@@ -77,6 +81,7 @@ spec:
           workspace: code
     - name: build-and-push-continuous-test-image
       taskRef:
+        kind: Task
         name: kaniko
       runAfter:
         - build
@@ -96,6 +101,7 @@ spec:
           workspace: code
     - name: build-and-push-rest-api-image
       taskRef:
+        kind: Task
         name: kaniko
       runAfter:
         - build
@@ -115,6 +121,7 @@ spec:
           workspace: code
     - name: patch-deployment-images
       taskRef:
+        kind: Task
         name: bash
       runAfter:
         - build-and-push-aggregator-image
@@ -135,6 +142,7 @@ spec:
           workspace: infra
     - name: commit-and-push-to-infra
       taskRef:
+        kind: Task
         name: git-cli
       runAfter:
         - patch-deployment-images
