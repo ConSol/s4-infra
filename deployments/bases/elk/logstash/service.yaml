@@ -4,12 +4,7 @@ metadata:
   name: logstash
 spec:
   ports:
-    - name: gelf
-      protocol: UDP
-      port: 12201
-    - name: logstash
+    - name: filebeat
       protocol: TCP
-      port: 5000
-    - name: api
-      protocol: TCP
-      port: 9600
+      port: 5044
+      targetPort: 5044

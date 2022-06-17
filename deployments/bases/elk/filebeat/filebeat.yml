@@ -1,0 +1,17 @@
+filebeat.autodiscover:
+  providers:
+    - type: kubernetes
+      node: ${NODE_NAME}
+      hints.enabled: true
+      hints.default_config:
+        type: container
+        paths:
+          - /var/log/containers/*${data.kubernetes.container.id}.log
+
+processors:
+  - add_cloud_metadata:
+  - add_host_metadata:
+
+output.logstash:
+  hosts:
+    - 'logstash:5044'

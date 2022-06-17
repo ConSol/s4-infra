@@ -3,11 +3,12 @@ kind: Kustomization
 
 resources:
   - elastic
-  - logstash
+  - filebeat
   - kibana
+  - logstash
 
 commonLabels:
   app.kubernetes.io/version: 7.10.2
-  app.kubernetes.io/component: logging
+  app.kubernetes.io/component: system-logging
   app.kubernetes.io/managed-by: ArgoCD
   app.kubernetes.io/created-by: ArgoCD

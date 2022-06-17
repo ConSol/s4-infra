@@ -10,14 +10,16 @@ spec:
         - name: logstash
           image: docker.elastic.co/logstash/logstash-oss:7.10.2
           ports:
-            - containerPort: 12201
-              protocol: UDP
-            - containerPort: 5000
+            - containerPort: 5044
+              name: logstash
             - containerPort: 9600
+              name: http
+          command:
+            - logstash
           volumeMounts:
             - mountPath: /usr/share/logstash/pipeline
               name: logstash-config
       volumes:
         - name: logstash-config
           configMap:
-            name: logstash-gelf-config
+            name: logstash-config
