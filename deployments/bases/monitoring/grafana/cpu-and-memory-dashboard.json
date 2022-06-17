@@ -446,7 +446,7 @@
         "current": {
           "selected": true,
           "text": "aggregator",
-          "value": "aggregator"
+          "value": "aggregator-app.s4.svc:80"
         },
         "hide": 0,
         "includeAll": false,
@@ -456,12 +456,12 @@
           {
             "selected": false,
             "text": "rest-api",
-            "value": "rest-api-app:80"
+            "value": "rest-api-app.s4.svc:80"
           },
           {
             "selected": true,
             "text": "aggregator",
-            "value": "aggregator-app:80"
+            "value": "aggregator-app.s4.svc:80"
           }
         ],
         "query": "rest-api, aggregator",
