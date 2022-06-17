@@ -26,7 +26,6 @@ spec:
         The workspace will be mounted to /root/.m2.
       mountPath: /root/.m2
       optional: true
-      readOnly: false
   params:
     - name: MAVEN_IMAGE
       type: string
