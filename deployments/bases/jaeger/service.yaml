@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: jaeger
 spec:
+  type: LoadBalancer
   ports:
     - name: http
       protocol: TCP
