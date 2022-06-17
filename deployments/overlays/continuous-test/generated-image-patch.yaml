@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: main
-          image: 935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/continuous-test:99d6f1c
+          image: 935491670310.dkr.ecr.eu-central-1.amazonaws.com/s4/continuous-test:b47d452
