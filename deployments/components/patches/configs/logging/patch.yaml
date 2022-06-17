@@ -2,7 +2,7 @@
   path: "/spec/template/spec/containers/0/env/-"
   value:
     name: GELF_ENABLED
-    value: false
+    value: 'false'
 - op: add
   path: "/spec/template/spec/containers/0/env/-"
   value:
