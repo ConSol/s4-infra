@@ -13,8 +13,8 @@ spec:
           env:
             - name: QUARKUS_HTTP_PORT
               value: '8080'
-            - name: POD_NAME
+            - name: APP_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.name
+                  fieldPath: metadata.labels['app.kubernetes.io/name']
           envFrom: []
