@@ -15,7 +15,8 @@ spec:
   workspaces:
     - name: code
     - name: infra
-    - name: maven-settings-and-cache
+    - name: maven-settings
+    - name: maven-cache
     - name: git-credentials
   tasks:
     - name: clone-code
@@ -56,13 +57,13 @@ spec:
           value:
             - clean
             - install
-            - -Dmaven.repo.local=$(workspaces.maven-settings-and-cache.path)
-            - -DskipTests
       workspaces:
         - name: source
           workspace: code
         - name: maven-settings
-          workspace: maven-settings-and-cache
+          workspace: maven-settings
+        - name: maven-cache
+          workspace: maven-cache
     - name: build-and-push-aggregator-image
       taskRef:
         kind: Task
@@ -116,6 +117,7 @@ spec:
         kind: Task
         name: bash
       runAfter:
+        - clone-infra
         - build-and-push-aggregator-image
         - build-and-push-rest-api-image
         - build-and-push-continuous-test-image
@@ -150,8 +152,13 @@ spec:
             git add deployments/overlays/aggregator/generated-image-patch.yaml
             git add deployments/overlays/continuous-test/generated-image-patch.yaml
             git add deployments/overlays/rest-api/generated-image-patch.yaml
-            git commit -m "commit $(tasks.clone-code.results.commit-short): updating images"
-            git push -u origin
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Changes detected, pushing"
+              git commit -m "commit $(tasks.clone-code.results.commit-short): updating images"
+              git push -u origin
+            else
+              echo "No changes detected, skipping push"
+            fi
       workspaces:
         - name: source
           workspace: infra

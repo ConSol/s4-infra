@@ -31,6 +31,7 @@ spec:
           - name: code
             volumeClaimTemplate:
               spec:
+                storageClassName: efs-sc
                 accessModes:
                   - ReadWriteOnce
                 resources:
@@ -39,6 +40,7 @@ spec:
           - name: infra
             volumeClaimTemplate:
               spec:
+                storageClassName: efs-sc
                 accessModes:
                   - ReadWriteOnce
                 resources:
@@ -47,14 +49,11 @@ spec:
           - name: git-credentials
             secret:
               secretName: github-credentials
-          - name: maven-settings-and-cache
-            volumeClaimTemplate:
-              spec:
-                accessModes:
-                  - ReadWriteOnce
-                resources:
-                  requests:
-                    storage: 1Gi
+          - name: maven-settings
+            emptyDir: {}
+          - name: maven-cache
+            persistentVolumeClaim:
+              claimName: maven-cache-pvc
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
