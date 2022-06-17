@@ -3,8 +3,3 @@
   value:
     configMapRef:
       name: gelf-config
-- op: add
-  path: "/spec/template/spec/containers/0/env/-"
-  value:
-    name: CONSOLE_LOG_JSON
-    value: 'true'
